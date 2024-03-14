@@ -64,12 +64,20 @@ public class Registration{
         if(age < 5 || age > 18){
             throw new IllegalArgumentException("Student must be between the ages of 5 and 18.");
         }
-             
-
-/***********ADD CODE HERE***********/                
-
-
-    }    
+                       
+             // Prepare and execute the SQL query
+    String sql = "INSERT INTO Competitor (CompetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, id);
+        statement.setString(2, lName);
+        statement.setString(3, fName);
+        statement.setInt(4, age);
+        statement.setString(5, instrument);
+        statement.setString(6, teacherID);
+        
+        statement.executeUpdate();
+    }
+    }   
 
     
 // Used to ensure that any new students are connected to an existing teacher    
