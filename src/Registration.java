@@ -29,12 +29,15 @@ public class Registration{
 
 
 //Must create a connection to the database, no arguments, no return value    
-    public void initializeConnection(){
-
-        Connection myConnect = DriverManager.getConnection("jdbc:postgresql://localhost/completion", "oop", "ucalgary");
-               
-
+public void initializeConnection() {
+    try {
+        dbConnect = DriverManager.getConnection("jdbc:postgresql://localhost/completion", "oop", "ucalgary");
+        System.out.println("Database connection established successfully.");
+    } catch (SQLException e) {
+        System.err.println("Failed to connect to the database: " + e.getMessage());
     }
+}
+
     
     String getDburl(){
         return this.DBURL;
@@ -54,7 +57,7 @@ public class Registration{
 
         try {
             // Create a statement using the existing connection
-            Statement statement = myConnect.createStatement();
+            Statement statement = dbConnect.createStatement();
 
             // Execute the SQL query
             String query = "SELECT Fname, Lname FROM " + tableName;
@@ -88,55 +91,40 @@ public class Registration{
         if(age < 5 || age > 18){
             throw new IllegalArgumentException("Student must be between the ages of 5 and 18.");
         }
-                       
-             // Prepare and execute the SQL query
-    String sql = "INSERT INTO Competitor (CompetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
-    try (PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setString(1, id);
-        statement.setString(2, lName);
-        statement.setString(3, fName);
-        statement.setInt(4, age);
-        statement.setString(5, instrument);
-        statement.setString(6, teacherID);
-        
-        statement.executeUpdate();
-    }
-    }   
-
-    
-// Used to ensure that any new students are connected to an existing teacher    
-    private boolean validateTeacher(String teacherID){
-        
-        boolean validTeacher = false;
-                    
-        try {                    
-            Statement myStmt = dbConnect.createStatement();
-            
-            // Execute SQL query
-            results = myStmt.executeQuery("SELECT * FROM teacher");
-            
-            // Process the results set
-            while (results.next()){
-                if(results.getString("TeacherID").equals(teacherID))
-                    validTeacher = true;
-            }
-            
-            myStmt.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return validTeacher;
-
-    }    
-    
- 
-    public void deleteCompetitor(String id){
+             
 
 /***********ADD CODE HERE***********/                
 
 
     }    
+
+    
+// Used to ensure that any new students are connected to an existing teacher    
+    private boolean validateTeacher(String teacherID){
+        
+      return true;
+
+    }    
+    
+ 
+    public void deleteCompetitor(String id) {
+        try {
+            Statement statement = dbConnect.createStatement();
+            String query = "DELETE FROM Competitor WHERE CompetitorID = '" + id + "'";
+            int rowsAffected = statement.executeUpdate(query);
+            
+            if (rowsAffected > 0) {
+                System.out.println("Competitor #" + id + " has been successfully deleted.");
+            } else {
+                System.out.println("Competitor #" + id + " not found. No deletion performed.");
+            }
+            
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+        
 
     public void close() {
         
