@@ -105,8 +105,8 @@ public void initializeConnection() {
 		
 			statement.executeUpdate();
 		} 
-		catch(SQLException ex){
-			ex.printStackTrace();
+		catch(SQLException query){
+			query.printStackTrace();
 		}
 	}
   
