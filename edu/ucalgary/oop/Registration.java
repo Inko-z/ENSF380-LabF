@@ -143,7 +143,13 @@ public void initializeConnection() {
 
 	public void close() {
 		
-/***********ADD CODE HERE***********/                
+		try {
+			results.close();
+			dbConnect.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 	
