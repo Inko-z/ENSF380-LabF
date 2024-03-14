@@ -91,10 +91,11 @@ public void initializeConnection() {
 		if(age < 5 || age > 18){
 			throw new IllegalArgumentException("Student must be between the ages of 5 and 18.");
 		}
-					   
+				
+		try{
 			 // Prepare and execute the SQL query
-		String sql = "INSERT INTO Competitor (CompetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
-		try (PreparedStatement statement = dbconnect.prepareStatement(sql)) {
+			String query = "INSERT INTO Competitor (CompbetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
+			PreparedStatement statement = dbConnect.prepareStatement(query); 
 			statement.setString(1, id);
 			statement.setString(2, lName);
 			statement.setString(3, fName);
@@ -103,8 +104,8 @@ public void initializeConnection() {
 			statement.setString(6, teacherID);
 		
 			statement.executeUpdate();
-			statement.close();
-		}	
+			finally;
+		}
 	}   
 
 	
