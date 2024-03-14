@@ -104,9 +104,10 @@ public void initializeConnection() {
 			statement.setString(6, teacherID);
 		
 			statement.executeUpdate();
+			statement.close();
 		} 
-		catch(SQLException query){
-			query.printStackTrace();
+		catch(SQLException ex){
+			ex.printStackTrace();
 		}
 	}
   
