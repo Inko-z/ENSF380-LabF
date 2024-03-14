@@ -91,7 +91,7 @@ public class Registration{
                        
              // Prepare and execute the SQL query
     String sql = "INSERT INTO Competitor (CompetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
-    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+    try (PreparedStatement statement = myConnect.prepareStatement(sql)) {
         statement.setString(1, id);
         statement.setString(2, lName);
         statement.setString(3, fName);
