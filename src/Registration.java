@@ -94,7 +94,7 @@ public void initializeConnection() {
 					   
 			 // Prepare and execute the SQL query
 		String sql = "INSERT INTO Competitor (CompetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
-		try (PreparedStatement statement = myConnect.prepareStatement(sql)) {
+		try (PreparedStatement statement = dbconnect.prepareStatement(sql)) {
 			statement.setString(1, id);
 			statement.setString(2, lName);
 			statement.setString(3, fName);
