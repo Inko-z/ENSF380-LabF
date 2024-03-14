@@ -31,7 +31,8 @@ public class Registration{
 //Must create a connection to the database, no arguments, no return value    
     public void initializeConnection(){
 
-/***********ADD CODE HERE***********/                
+        Connection myConnect = DriverManager.getConnection("jdbc:postgresql://localhost/completion", "oop", "ucalgary");
+               
 
     }
     
@@ -48,11 +49,34 @@ public class Registration{
     }
 
     
-    public String selectAllNames(String tableName){     
+    public String selectAllNames(String tableName) {
+        String data = "";
 
-/***********ADD CODE HERE***********/                
+        try {
+            // Create a statement using the existing connection
+            Statement statement = myConnect.createStatement();
 
+            // Execute the SQL query
+            String query = "SELECT Fname, Lname FROM " + tableName;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // Process the result set
+            while (resultSet.next()) {
+                String firstName = resultSet.getString("Fname");
+                String lastName = resultSet.getString("Lname");
+                data += lastName + ", " + firstName + "\n";
+            }
+
+            // Close the result set
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return the result
+        return data;
     }
+    
     
     
     public void insertNewCompetitor(String id, String lName, String fName, int age, String instrument, String teacherID){
