@@ -103,6 +103,7 @@ public void initializeConnection() {
 			statement.setString(6, teacherID);
 		
 			statement.executeUpdate();
+			statement.close();
 		}	
 	}   
 
@@ -136,8 +137,8 @@ public void initializeConnection() {
  
 	public void deleteCompetitor(String id){
 
-/***********ADD CODE HERE***********/                
-
+		String query = "DELETE FROM completion WHERE id = ?";
+		PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
 	}    
 
