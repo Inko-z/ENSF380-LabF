@@ -103,11 +103,10 @@ public void initializeConnection() {
 			statement.setString(6, teacherID);
 	
 			statement.executeUpdate();
-			
-			// Close the statement
 			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} 
+		catch(SQLException ex){
+			ex.printStackTrace();
 		}
 	}
 	
