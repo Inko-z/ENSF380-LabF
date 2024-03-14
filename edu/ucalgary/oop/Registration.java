@@ -139,12 +139,25 @@ public void initializeConnection() {
 	}    
 	
  
-	public void deleteCompetitor(String id){
-
-		String query = "DELETE FROM completion WHERE id = ?";
-		PreparedStatement myStmt = dbConnect.prepareStatement(query);
-
-	}    
+	public void deleteCompetitor(String id) {
+		try {
+			String query = "DELETE FROM competitor WHERE CompetitorID = ?";
+			PreparedStatement myStmt = dbConnect.prepareStatement(query);
+			myStmt.setString(1, id);
+			
+			int rowsAffected = myStmt.executeUpdate();
+			if (rowsAffected > 0) {
+				System.out.println("Competitor with ID " + id + " has been deleted successfully.");
+			} else {
+				System.out.println("No competitor found with ID " + id + ". No deletion performed.");
+			}
+			
+			myStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		
 
 	public void close() {
 		
