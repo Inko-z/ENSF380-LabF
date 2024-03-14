@@ -82,37 +82,38 @@ public void initializeConnection() {
 	
 	
 	
-	public void insertNewCompetitor(String id, String lName, String fName, int age, String instrument, String teacherID){
-	   
-		if(!validateTeacher(teacherID)){
+	public void insertNewCompetitor(String id, String lName, String fName, int age, String instrument, String teacherID) {
+		if (!validateTeacher(teacherID)) {
 			throw new IllegalArgumentException("Student must have a registered teacher.");
 		}
-
-		if(age < 5 || age > 18){
+	
+		if (age < 5 || age > 18) {
 			throw new IllegalArgumentException("Student must be between the ages of 5 and 18.");
 		}
-				
-		try{
-			 // Prepare and execute the SQL query
+	
+		try {
+			// Prepare and execute the SQL query
 			String query = "INSERT INTO Competitor (CompetitorID, LName, FName, Age, Instrument, TeacherID) VALUES (?, ?, ?, ?, ?, ?)";
-			PreparedStatement statement = dbConnect.prepareStatement(query); 
+			PreparedStatement statement = dbConnect.prepareStatement(query);
 			statement.setString(1, id);
 			statement.setString(2, lName);
 			statement.setString(3, fName);
 			statement.setInt(4, age);
 			statement.setString(5, instrument);
 			statement.setString(6, teacherID);
-		
+	
 			statement.executeUpdate();
-		} 
-		catch(SQLException query){
-			query.printStackTrace();
+			
+			// Close the statement
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
+	
   
 
 	
-// Used to ensure that any new students are connected to an existing teacher    
 	private boolean validateTeacher(String teacherID){
 		
 		boolean validTeacher = false;
