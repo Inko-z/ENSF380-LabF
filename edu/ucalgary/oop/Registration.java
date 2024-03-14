@@ -104,9 +104,9 @@ public void initializeConnection() {
 			statement.setString(6, teacherID);
 		
 			statement.executeUpdate();
-			finally;
 		}
-	}   
+	}
+  
 
 	
 // Used to ensure that any new students are connected to an existing teacher    
